@@ -11,22 +11,44 @@ PREDICATES %PART1
 	nondeterm spouse(name, name).
 	
 PREDICATES %PART2
+	% general
 	nondeterm mother(name,name).
 	nondeterm father(name,name).
 	nondeterm sister(name,name).
 	nondeterm brother(name,name).
 	nondeterm sb(name,name).
+
+	% v1 
 	nondeterm granddaughter(name,name).
 	nondeterm nephew(name,name).
+
+	% v4
+	nondeterm grandfather(name, name).
+	nondeterm aunt(name, name).
+
+	% v5
+	nondeterm grandmother(name, name).
+	nondeterm cousin(name, name).
 	
 CLAUSES %PART1
-	mother(X,Y) :- parent(X,Y),woman(X,_,_).
-	father(X,Y) :- parent(X,Y),man(X,_,_).
-	sister(X,Y) :- father(F,X),father(F,Y),mother(M,X),mother(M,Y),woman(X,_,_), X<>Y.
-	brother(X,Y) :- father(F,X),father(F,Y),mother(M,X),mother(M,Y),man(X,_,_), X<>Y.
-	sb(X,Y) :- sister(X,Y);brother(X,Y).
-	granddaughter(X,Y) :- parent(Z,X),parent(Y,Z),woman(X,_,_).
-	nephew(X,Y) :- parent(W,Y),sb(X,W).
+	% general
+	mother(X,Y) 		:- parent(X,Y),woman(X,_,_).
+	father(X,Y) 		:- parent(X,Y),man(X,_,_).
+	sister(X,Y) 		:- father(F,X),father(F,Y),mother(M,X),mother(M,Y),woman(X,_,_), X<>Y.
+	brother(X,Y) 		:- father(F,X),father(F,Y),mother(M,X),mother(M,Y),man(X,_,_), X<>Y.
+	sb(X,Y) 			:- sister(X,Y);brother(X,Y).
+
+	% v1
+	granddaughter(X,Y) 	:- parent(Z,X),parent(Y,Z),woman(X,_,_).
+	nephew(X,Y) 		:- parent(W,Y),sb(X,W).
+
+	% v4
+	grandfather(X, Y) 	:- parent(Z,Y),father(X,Z).
+	aunt(X,Y)			:- parent(Z,Y),sister(X,Z).
+
+	% v5
+	grandmother(X, Y) 	:- parent(Z,Y),mother(X,Z).
+	cousin(X, Y) 		:- parent(Z,Y),parent(W,X),sb(Z,W).
 	
 CLAUSES %PART2
 	
@@ -61,6 +83,10 @@ CLAUSES %PART2
 	parent(camilla, tim).
 	
 GOAL
-	%father(tim, john).
-	%nephew(susan, otto).
-	granddaughter(eleonore, katrin).
+	%father(tim, john). %should return yes
+	%nephew(susan, otto). %should return yes
+	%granddaughter(eleonore, katrin). %should return yes
+	%grandmother(katrin, eleonore). %should return yes
+	%cousin(john, till). %should return yes
+	%grandfather(theodor, john). %should return yes
+	aunt(john, jack). %should return no 
