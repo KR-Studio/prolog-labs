@@ -22,8 +22,8 @@ PREDICATES %PART2
 CLAUSES %PART1
 	mother(X,Y) :- parent(X,Y),woman(X,_,_).
 	father(X,Y) :- parent(X,Y),man(X,_,_).
-	sister(X,Y) :- father(F,X),father(F,Y),mother(M,X),mother(M,Y),woman(X,_,_).
-	brother(X,Y) :- father(F,X),father(F,Y),mother(M,X),mother(M,Y),man(X,_,_).
+	sister(X,Y) :- father(F,X),father(F,Y),mother(M,X),mother(M,Y),woman(X,_,_), X<>Y.
+	brother(X,Y) :- father(F,X),father(F,Y),mother(M,X),mother(M,Y),man(X,_,_), X<>Y.
 	sb(X,Y) :- sister(X,Y);brother(X,Y).
 	granddaughter(X,Y) :- parent(Z,X),parent(Y,Z),woman(X,_,_).
 	nephew(X,Y) :- parent(W,Y),sb(X,W).
