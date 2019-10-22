@@ -101,4 +101,5 @@ GOAL
 	% v5
 	date(Year, Month, Day), nl,
 	write("Now it`s: ", Year), nl,
-	woman(N,S,Y); man(N,S,Y), Year - Y >= 20.
+	%woman(N,S,Y), Year - Y >= 20.
+	man(N,S,Y), Year - Y >= 20.
