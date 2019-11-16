@@ -19,7 +19,8 @@ CLAUSES
 	isa(nuclear_powered_icebreaker, icebreaker).
 	isa(container_ship, cargo_ship).
 	
-	hasprop(device, travel, sail).
+	hasprop(ship, travel, sail).
+    hasprop(ship, incorporates, hull).
 	hasprop(tanker, payload, cargo).
 	hasprop(cargo_ship, payload, cargo).
 	hasprop(cargo_ship, size, large).
